@@ -36,13 +36,13 @@
   <button id="btnLogOut" onclick="logOut()">Log Out</button>
   <button id="btnClose" onclick="closed()">Close</button>
 
-  <!-- <script src="js/vconsole.min.js"></script> -->
+  <script src="js/vconsole.min.js"></script>
   <!-- <script>
     var vConsole = new VConsole()
     console.log("Hello World!")
   </script> -->
 
-  <script src="https://static.line-scdn.net/liff/edge/versions/2.2.0/sdk.js"></script>
+  <!-- <script src="https://static.line-scdn.net/liff/edge/versions/2.2.0/sdk.js"></script> -->
   <script>
     function createUniversalLink() {
     }
@@ -72,6 +72,11 @@
     }
 
     async function getUserProfile() {
+      const profile = await liff.getProfile()
+      document.getElementById("pictureUrl").src = profile.pictureUrl
+      document.getElementById("userId").append(profile.userId)
+      document.getElementById("statusMessage").append(profile.statusMessage)
+      document.getElementById("displayName").append(profile.displayName)
     }
 
     function getEnvironment() {
@@ -79,20 +84,21 @@
       document.getElementById("language").append(liff.getLanguage())
       document.getElementById("version").append(liff.getVersion())
       document.getElementById("accessToken").append(liff.getAccessToken())
-      document.getElementById("isInClient").append(liff.isInClient())
+      document.getElementById("isInClient").append(liff.getisInClient())
       if (liff.isInClient()){
         document.getElementById("btnLogOut").style.display = "none"
-      } else {
-        document.getElementById("btnMsg").style.display = "none"  
-        document.getElementById("btnScanCode").style.display = "none"  
-        document.getElementById("btnClose").style.display = "none" 
+      }  else {
+        document.getElementById("btnMsg").style.display = "none"
+        document.getElementById("btnScanCode").style.display = "none"
+        document.getElementById("btnClose").style.display = "none"
       }
     }
 
     async function main() {
+      alert("LINE Developers x Skooldio")
       await liff.init({ liffId: "1654666173-Pwo6gxyM" })
-       getEnvironment()
-      // getUserProfile()
+      getEnvironment()
+      getUserProfile()
       // getContext()
       // getFriendship()
       // createUniversalLink()
